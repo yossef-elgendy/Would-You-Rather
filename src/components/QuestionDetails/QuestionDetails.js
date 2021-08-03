@@ -15,6 +15,7 @@ const QuestionDetails = ({match}) => {
                 author: state.users[state.questions[questionId].author],
                 currentUser: state.users[state.authedUser],
                 users:state.users,
+                loadingBar: state.loadingBar
                 
             }
         } else {
@@ -23,7 +24,7 @@ const QuestionDetails = ({match}) => {
        
     })
     
-    const { question, author, currentUser, users } = data !== false ? data : {}
+    const { question, author, currentUser, users, loadingBar } = data !== false ? data : {}
 
 
     if(data === false){
@@ -35,19 +36,22 @@ const QuestionDetails = ({match}) => {
     return (
         <Container style={{marginTop:75}}>
             <Row className="justify-content-center">
-                <Col md={12}>
-                    {answered
-                    ? <Details
-                        question={question}
-                        author={author}
-                        currentUser={currentUser}
-                        users={users}
-                        />
-                    : <Question id={questionId} flag={false} />
+                {loadingBar.default === 0 && (
+                    <Col md={12}>
+                        {answered
+                        ? <Details
+                            question={question}
+                            author={author}
+                            currentUser={currentUser}
+                            users={users}
+                            />
+                        : <Question id={questionId} flag={false} />
+                        
+                        }
                     
-                    }
-                    
-                </Col>
+                    </Col>
+                )}
+              
             </Row>
         </Container>
     )
