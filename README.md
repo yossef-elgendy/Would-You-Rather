@@ -48,7 +48,8 @@ To get started with the project right away:
     │   │    └── Leaderboard.js
     │   │ 
     │   ├── QuestionDetails 
-    │   │    └── QuestionDetails.js
+    │   │    ├── QuestionDetails.js
+    │   │    └── Details.js
     │   │
     │   ├── NavStyle.js
     │   ├── ProtectedRoute.js
