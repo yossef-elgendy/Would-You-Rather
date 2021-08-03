@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Card, ListGroup, ListGroupItem, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { handleAnswer } from '../../actions/questions'
 
 const Question = ({id, flag}) => {
@@ -12,6 +12,7 @@ const Question = ({id, flag}) => {
 
     const answer = useRef('');
     const dispatch = useDispatch()
+    const history = useHistory()
     const changeAnswer = (e) => {
         answer.current  = e.target.value
         console.log(answer)
@@ -23,6 +24,7 @@ const Question = ({id, flag}) => {
         e.preventDefault()
         if(answer !== ''){
             dispatch(handleAnswer({ authedUser, qid:id, answer:answer.current}))
+            history.push(`/questions/${id}`)
         } else {
             alert('Please choose an answer !')
         }
@@ -30,7 +32,7 @@ const Question = ({id, flag}) => {
     }
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card >
             <Card.Body className="text-white bg-dark">
                 <Card.Title >Would You Rather? </Card.Title>
             </Card.Body>
@@ -87,7 +89,7 @@ const Question = ({id, flag}) => {
                 <Card.Footer>
                     {flag
                     ?<Link
-                        to={`/question/${question.id}`}
+                        to={`/questions/${question.id}`}
                         className="btn btn-outline-primary"
                     >
                         Details

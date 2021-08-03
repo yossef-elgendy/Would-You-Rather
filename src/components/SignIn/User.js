@@ -8,7 +8,7 @@ import useStyles from './useStyles';
 
 const User = (props) => {
     const classes = useStyles();
-    const { id } = props
+    const { id, redirectPath } = props
     const users = useSelector(state => state.users)
     const image = require.context('../../img', true)
     const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const User = (props) => {
 
     const handleLogin = () => {
         dispatch(setAuthedUser(id))
-        history.push('/')
+        redirectPath !== null ? history.push(redirectPath) : history.push('/')
     }
 
     return (

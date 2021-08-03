@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleInitialData } from '../actions/shared'
 import LoadingBar from 'react-redux-loading';
 import SignIn from './SignIn/SignIn';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import NavBar from './NavBar';
 import ProtectedRoute from './ProtectedRoute';
@@ -15,6 +15,7 @@ import AddQuestion from './AddQuestion/AddQuestion';
 import Leaderboard from './Leaderboard/Leaderboard';
 import AboutUs from './AboutUs/AboutUs';
 import NotFound from './NotFound/NotFound';
+import { Fragment } from 'react';
 
 
 
@@ -51,7 +52,7 @@ const App = ({match}) => {
             <LoadingBar style={{position:'fixed', top:70}}/>
             <Switch> 
               <ProtectedRoute exact path="/" component={Home} />
-              <ProtectedRoute exact path="/question/:id" component={QuestionDetails} />
+              <ProtectedRoute exact path="/questions/:id" component={QuestionDetails} />
               <ProtectedRoute exact path="/leaderboard" component={Leaderboard} />
               <ProtectedRoute exact path="/add" component={AddQuestion} />
               <Route exact path="/aboutus" component={AboutUs}/> 
@@ -62,13 +63,14 @@ const App = ({match}) => {
               )}
 
               {loadingBar.default === 0 && (
-                  
-                <Route component={NotFound}/>
-                  
+                <Fragment>  
+                  <ProtectedRoute exact path="/404" component={NotFound}/>
+                  <Redirect to="/404"/>
+                </Fragment>
               )}
 
               
-
+                
             
             
             </Switch>

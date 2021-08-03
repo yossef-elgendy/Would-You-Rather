@@ -9,10 +9,11 @@ function ContextAwareToggle({ children, eventKey, callback }) {
   
     const decoratedOnClick = useAccordionToggle(
       eventKey,
-      () => callback && callback(eventKey),
+      () => callback && callback(),
     );
-  
+
     const isCurrentEventKey = currentEventKey === eventKey;
+  
   
     return (
         <Card.Header
@@ -30,16 +31,16 @@ const Home = () => {
 
     const { unAnswered, answered } = useSelector(state => {
         const { questions, authedUser} = state
-        const ids =  Object.keys(questions)
+        const ids =  Object.keys(questions).sort((a,b)=> questions[b].timestamp - questions[a].timestamp)
         const unAnswered = ids.filter(id => ( 
                 !questions[id].optionOne.votes.includes(authedUser) &&
                 !questions[id].optionTwo.votes.includes(authedUser)
-            )  
+            )
         )
         const answered = ids.filter(id => ( 
                 questions[id].optionOne.votes.includes(authedUser) ||
                 questions[id].optionTwo.votes.includes(authedUser)
-            )  
+            )
         )
 
         return { unAnswered, answered  }

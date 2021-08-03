@@ -1,93 +1,52 @@
-import Avatar from '@material-ui/core/Avatar';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import { Container, Row, Col, Card, Button, ListGroup, Form } from "react-bootstrap"
+
+import { Container, Row, Col} from "react-bootstrap"
 import { useSelector } from "react-redux"
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import Question from '../Home/Question';
+import Details from './Details';
 
 
 const QuestionDetails = ({match}) => {
     const questionId = match.params.id 
-    const image = require.context('../../img', true)
-    const history = useHistory()
-    const { question, author, currentUser, users } = useSelector(state => {
-        return {
-            question: state.questions[questionId],
-            author: state.users[state.questions[questionId].author],
-            currentUser: state.users[state.authedUser],
-            users:state.users
+    const data = useSelector(state => {
+        if(Object.keys(state.questions).includes(questionId)){
+            return {
+                question: state.questions[questionId],
+                author: state.users[state.questions[questionId].author],
+                currentUser: state.users[state.authedUser],
+                users:state.users,
+                
+            }
+        } else {
+            return false
         }
+       
     })
+    
+    const { question, author, currentUser, users } = data !== false ? data : {}
 
-    const goBack = () => {
-        history.push('/')
+
+    if(data === false){
+        return <Redirect to ="/404"/>
     }
-
+    
+    const answered = question.optionOne.votes.includes(currentUser.id) || question.optionTwo.votes.includes(currentUser.id) 
 
     return (
         <Container style={{marginTop:75}}>
-            <Row>
+            <Row className="justify-content-center">
                 <Col md={12}>
-                    <Card>
-                        <Card.Header>
-                            <Avatar alt={author.name} src={image(author.avatarURL).default}
-                             style={{display:'inline-block'}}/>
-                            <span style={{position:'relative', bottom:10, left:5 }}>{author.name}</span>
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Title>Would You Rather ?</Card.Title>
-
-                            <ListGroup className="list-group-flush">
-                                <ListGroup.Item key="optionOne">
-                                    <Form.Check
-                                        disabled
-                                        type={'radio'}
-                                        defaultChecked={question.optionOne.votes.includes(currentUser.id)}
-                                        id={`${question.id}-optionOne`}
-                                        name={`${question.id}-radio`}
-                                        label={question.optionOne.text}
-                                    />
-                                    {Math.floor((question.optionOne.votes.length/(question.optionTwo.votes.length+question.optionOne.votes.length))*100)}% Voted for this answer.
-                                    <br/>
-
-                                    {question.optionOne.votes.length > 0 && `Number of users voted for this option: ${question.optionOne.votes.length}`}
-
-                                    <AvatarGroup max={2} >
-                                        {question.optionOne.votes.length > 0 && question.optionOne.votes.map(id => (
-                                        <span key={id}>
-                                            <Avatar  alt={users[id].name} src={image(users[id].avatarURL).default} />
-                                        </span>
-                                        ))}
-
-                                    </AvatarGroup>
-
-                                </ListGroup.Item>
-
-
-                                <ListGroup.Item key="optionTwo">
-                                    <Form.Check 
-                                        disabled
-                                        defaultChecked={question.optionTwo.votes.includes(currentUser.id)}
-                                        type={'radio'}
-                                        id={`${question.id}-radio`}
-                                        name={`${question.id}-radio`}
-                                        label={question.optionTwo.text}
-                                    />
-                                    {Math.floor((question.optionTwo.votes.length/(question.optionTwo.votes.length+question.optionOne.votes.length))*100)}% Voted for this answer.
-                                    <br />
-                                    {question.optionTwo.votes.length > 0 && `Number of users voted for this option: ${question.optionTwo.votes.length}`}
-                                    
-                                    <AvatarGroup max={2} >
-                                        {question.optionTwo.votes.length > 0 && question.optionTwo.votes.map(id => (
-                                            <Avatar key={id} alt={users[id].name} src={image(users[id].avatarURL).default} />
-                                        ))}
-
-                                    </AvatarGroup>
-                                </ListGroup.Item>
-
-                            </ListGroup>
-                            <Button onClick={() => goBack()} variant="primary">Go Back</Button>
-                        </Card.Body>
-                    </Card>
+                    {answered
+                    ? <Details
+                        question={question}
+                        author={author}
+                        currentUser={currentUser}
+                        users={users}
+                        />
+                    : <Question id={questionId} flag={false} />
+                    
+                    }
+                    
                 </Col>
             </Row>
         </Container>

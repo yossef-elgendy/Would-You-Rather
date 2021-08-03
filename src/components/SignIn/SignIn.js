@@ -19,11 +19,12 @@ import Copyright from './Copyright';
 
 
 
-const SignIn = () => {
+const SignIn = ({location}) => {
     const classes = useStyles();
     const { users, authedUser } = useSelector(state => state)
     const userIds = Object.keys(users)
     const Authed = Object.keys(users).includes(authedUser)
+    const requestedPath = typeof location.state !== "undefined" ? location.state.requestedPath : null
     
     if(Authed){
         alert('You have already logged in !!')
@@ -56,7 +57,7 @@ const SignIn = () => {
             </div>
 
             <Grid container justifyContent="center" spacing={2}>
-                {userIds.map(id => <User key={id} id={id}/>)}
+                {userIds.map(id => <User key={id} redirectPath={requestedPath} id={id}/>)}
 
       
             </Grid>
