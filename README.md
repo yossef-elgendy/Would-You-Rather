@@ -1,10 +1,90 @@
 # Would You Rather Project
 
-This is the starter code for the final assessment project for Udacity's React & Redux course.
+This is the simple project to apply the knowledge learned on using redux with react to handle states.
 
-The `_DATA.js` file represents a fake database and methods that let you access the data. The only thing you need to edit in the ` _DATA.js` file is the value of `avatarURL`. Each user should have an avatar, so you’ll need to add the path to each user’s avatar.
+## Author
+[Youssef Elgendy](https://github.com/yossef-elgendy)
 
-Using the provided starter code, you'll build a React/Redux front end for the application. We recommend using the [Create React App](https://github.com/facebook/create-react-app) to bootstrap the project.
+## TL;DR
+
+To get started with the project right away:
+
+* install all project dependencies with `npm install`
+* start the development server with `npm start`
+
+## What You're Getting
+```bash
+├── README.md - This file.
+├── yarn.lock # The whitelisted short collection of available search terms for you to use with your app.
+├── package-lock.json
+├── .gitignore
+├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
+├── public
+│   ├── favicon.ico # React Icon, You may change if you wish.
+│   └── index.html # DO NOT MODIFY
+└── src
+    ├── components
+    │   ├── SignIn
+    │   │    ├── SignIn.js
+    │   │    ├── Copyright.js
+    │   │    ├── useStyles.js
+    │   │    └── User.js
+    │   │    
+    │   ├── NotFound 
+    │   │    ├── NotFound.js
+    │   │    └── NotFound.css
+    │   │    
+    │   ├── Home 
+    │   │    ├── Home.js
+    │   │    └── Question.js
+    │   │    
+    │   ├── AddQuestion 
+    │   │    └── AddQuestion.js
+    │   │   
+    │   ├── AboutUs 
+    │   │    └── AboutUs.js
+    │   │ 
+    │   ├── Leaderboard 
+    │   │    └── Leaderboard.js
+    │   │ 
+    │   ├── QuestionDetails 
+    │   │    └── QuestionDetails.js
+    │   │
+    │   ├── NavStyle.js
+    │   ├── ProtectedRoute.js
+    │   ├── NavBar.js
+    │   └── App.js
+    │ 
+    ├── utils
+    │   ├── _DATA.js
+    │   ├── api.js
+    │   └── helpers.js
+    │
+    ├── actions
+    │   ├── authedUser.js
+    │   ├── users.js
+    │   ├── shared.js
+    │   └── questions.js
+    │
+    ├── reducers
+    │   ├── index.js
+    │   ├── users.js
+    │   ├── authedUser.js
+    │   └── questions.js
+    │
+    ├── middlewares
+    │   ├── logger.js
+    │   └── index.js
+    │   
+    ├── img
+    │   ├── appImage.jpg
+    │   ├── dan.png
+    │   ├── sarah.png
+    │   └── tyler.png
+    │
+    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
+```
+
 
 ## Data
 
@@ -94,7 +174,3 @@ Your code will talk to the database via 4 methods:
 | authedUser | String | The id of the user who answered the question|
 | qid | String | The id of the question that was answered|
 | answer | String | The option the user selected. The value should be either `"optionOne"` or `"optionTwo"`|
-
-## Contributing
-
-This repository is the starter code for *all* Udacity students. Therefore, we most likely will not accept pull requests. For details, check out [CONTRIBUTING.md](https://github.com/udacity/reactnd-project-would-you-rather-starter/blob/master/CONTRIBUTING.md).
